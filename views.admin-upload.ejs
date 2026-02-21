@@ -1,0 +1,20 @@
+<% title = 'Upload File' %>
+<h1>Upload New File</h1>
+<div class="Box p-4">
+  <form method="POST" action="/admin/upload" enctype="multipart/form-data">
+    <dl class="form-group">
+      <dt><label>Title</label></dt>
+      <dd><input type="text" name="title" class="form-control" required></dd>
+    </dl>
+    <dl class="form-group">
+      <dt><label>Description</label></dt>
+      <dd><textarea name="description" class="form-control" rows="3"></textarea></dd>
+    </dl>
+    <dl class="form-group">
+      <dt><label>File</label></dt>
+      <dd><input type="file" name="file" required></dd>
+    </dl>
+    <button type="submit" class="btn btn-primary">Upload</button>
+    <a href="/admin/dashboard" class="btn">Cancel</a>
+  </form>
+</div>
