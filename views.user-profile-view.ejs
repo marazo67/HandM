@@ -1,0 +1,34 @@
+<% title = profileUser.name %>
+<div class="Box p-4">
+  <div class="d-flex flex-items-center">
+    <% if (profileUser.profile_pic_url) { %>
+      <img src="<%= profileUser.profile_pic_url %>" class="avatar" style="width: 80px; height: 80px; margin-right: 16px;">
+    <% } else { %>
+      <span class="avatar" style="width: 80px; height: 80px; line-height: 80px; font-size: 40px; margin-right: 16px;">
+        <%= profileUser.name ? profileUser.name[0].toUpperCase() : 'U' %>
+      </span>
+    <% } %>
+    <div>
+      <h2><%= profileUser.name %></h2>
+      <p class="text-gray">@<%= profileUser.username %></p>
+      <div class="d-flex">
+        <span class="mr-3"><strong><%= followersCount %></strong> followers</span>
+        <span><strong><%= followingCount %></strong> following</span>
+      </div>
+      <% if (profileUser.bio) { %>
+        <p class="mt-2"><%= profileUser.bio %></p>
+      <% } %>
+      <% if (profileUser.role === 'admin') { %>
+        <span class="badge-verified">Verified Admin</span>
+      <% } %>
+    </div>
+    <div class="ml-auto">
+      <form method="POST" action="/user/follow/<%= profileUser.id %>">
+        <button type="submit" class="btn <%= isFollowing ? 'btn-danger' : 'btn-primary' %>">
+          <%= isFollowing ? 'Unfollow' : 'Follow' %>
+        </button>
+      </form>
+      <a href="/messages/<%= profileUser.id %>" class="btn btn-outline mt-2">Message</a>
+    </div>
+  </div>
+</div>
