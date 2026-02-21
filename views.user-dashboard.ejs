@@ -1,0 +1,61 @@
+<% title = 'Dashboard' %>
+<div class="d-flex flex-justify-between flex-items-center mb-4">
+  <h1>Welcome, <%= user.name %></h1>
+  <div>
+    <a href="/user/profile" class="btn btn-sm">Profile</a>
+    <a href="/messages" class="btn btn-sm">Messages</a>
+  </div>
+</div>
+
+<% if (mustFollow) { %>
+  <div class="Box p-4 text-center">
+    <p>You must follow the admin first to see content.</p>
+    <form method="POST" action="/user/follow-admin/<%= adminId %>">
+      <button type="submit" class="btn btn-primary">Follow Admin</button>
+    </form>
+  </div>
+<% } else { %>
+  <!-- Admin Posts -->
+  <h2 class="h3 mb-3">Latest Updates</h2>
+  <% if (posts.length === 0) { %>
+    <p>No posts yet.</p>
+  <% } %>
+  <% posts.forEach(post => { %>
+    <div class="post-card">
+      <div class="d-flex flex-items-center mb-2">
+        <% if (post.profile_pic_url) { %>
+          <img src="<%= post.profile_pic_url %>" class="avatar mr-2" style="width: 24px; height: 24px;">
+        <% } else { %>
+          <span class="avatar mr-2"><%= post.name ? post.name[0] : 'A' %></span>
+        <% } %>
+        <strong><%= post.name %></strong>
+        <% if (post.user_id === user.id && user.role === 'admin') { %>
+          <span class="badge-verified ml-1">Verified</span>
+        <% } %>
+        <span class="text-gray-light ml-2"><%= new Date(post.created_at).toLocaleString() %></span>
+      </div>
+      <p><%= post.content %></p>
+      <% if (post.image_url) { %>
+        <img src="<%= post.image_url %>" style="max-width: 100%; max-height: 300px;" class="mt-2">
+      <% } %>
+    </div>
+  <% }); %>
+
+  <!-- Files -->
+  <h2 class="h3 mb-3 mt-4">Configuration Files</h2>
+  <% if (files.length === 0) { %>
+    <p>No files available.</p>
+  <% } %>
+  <% files.forEach(file => { %>
+    <div class="file-card">
+      <div class="d-flex flex-justify-between">
+        <div>
+          <h3 class="h4"><%= file.title %></h3>
+          <p><%= file.description %></p>
+          <small>Uploaded by <%= file.name %> on <%= new Date(file.created_at).toLocaleDateString() %></small>
+        </div>
+        <a href="<%= file.file_url %>" download class="btn btn-sm btn-primary">Download</a>
+      </div>
+    </div>
+  <% }); %>
+<% } %>
