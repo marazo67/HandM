@@ -1,0 +1,42 @@
+<% title = 'Admin Dashboard' %>
+<h1>Admin Dashboard</h1>
+<div class="d-flex flex-justify-between mb-4">
+  <div>
+    <a href="/admin/upload" class="btn btn-primary">Upload File</a>
+    <a href="/admin/posts/new" class="btn btn-primary">Create Post</a>
+    <a href="/admin/stats" class="btn">View Stats</a>
+  </div>
+</div>
+
+<h2>Your Posts</h2>
+<% if (posts.length === 0) { %>
+  <p>No posts yet.</p>
+<% } %>
+<% posts.forEach(post => { %>
+  <div class="post-card">
+    <p><%= post.content %></p>
+    <% if (post.image_url) { %>
+      <img src="<%= post.image_url %>" style="max-width: 200px;">
+    <% } %>
+    <div class="mt-2">
+      <a href="/admin/posts/edit/<%= post.id %>" class="btn btn-sm">Edit</a>
+      <form method="POST" action="/admin/posts/delete/<%= post.id %>" style="display: inline;">
+        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this post?')">Delete</button>
+      </form>
+    </div>
+  </div>
+<% }); %>
+
+<h2 class="mt-4">Your Files</h2>
+<% if (files.length === 0) { %>
+  <p>No files uploaded.</p>
+<% } %>
+<% files.forEach(file => { %>
+  <div class="file-card d-flex flex-justify-between">
+    <div>
+      <h4><%= file.title %></h4>
+      <p><%= file.description %></p>
+    </div>
+    <a href="<%= file.file_url %>" target="_blank" class="btn btn-sm">View</a>
+  </div>
+<% }); %>
