@@ -1,0 +1,30 @@
+<% title = 'Messages' %>
+<h1>Messages</h1>
+<div class="Box">
+  <div class="Box-header">
+    <h3 class="Box-title">Conversations</h3>
+  </div>
+  <ul>
+    <% if (conversations.length === 0) { %>
+      <li class="Box-row">No conversations yet.</li>
+    <% } %>
+    <% conversations.forEach(conv => { %>
+      <li class="Box-row d-flex flex-items-center">
+        <% if (conv.profile_pic_url) { %>
+          <img src="<%= conv.profile_pic_url %>" class="avatar mr-2" style="width: 32px; height: 32px;">
+        <% } else { %>
+          <span class="avatar mr-2"><%= conv.name ? conv.name[0] : 'U' %></span>
+        <% } %>
+        <div class="flex-auto">
+          <a href="/messages/<%= conv.id %>"><strong><%= conv.name %></strong> @<%= conv.username %></a>
+          <div class="text-small text-gray">
+            <% if (conv.last_message) { %>
+              <%= decrypt(conv.last_message).substring(0, 50) %><%= decrypt(conv.last_message).length > 50 ? '...' : '' %>
+            <% } %>
+          </div>
+        </div>
+        <span class="text-gray-light"><%= conv.last_time ? new Date(conv.last_time).toLocaleDateString() : '' %></span>
+      </li>
+    <% }); %>
+  </ul>
+</div>
