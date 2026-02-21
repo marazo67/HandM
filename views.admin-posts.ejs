@@ -1,0 +1,20 @@
+<% title = post ? 'Edit Post' : 'Create Post' %>
+<h1><%= title %></h1>
+<div class="Box p-4">
+  <form method="POST" action="<%= post ? '/admin/posts/update/' + post.id : '/admin/posts' %>" enctype="multipart/form-data">
+    <% if (post && post.image_url) { %>
+      <input type="hidden" name="existing_image" value="<%= post.image_url %>">
+      <img src="<%= post.image_url %>" style="max-width: 200px; margin-bottom: 16px;">
+    <% } %>
+    <dl class="form-group">
+      <dt><label>Content</label></dt>
+      <dd><textarea name="content" class="form-control" rows="5" required><%= post ? post.content : '' %></textarea></dd>
+    </dl>
+    <dl class="form-group">
+      <dt><label>Image (optional)</label></dt>
+      <dd><input type="file" name="image" accept="image/*"></dd>
+    </dl>
+    <button type="submit" class="btn btn-primary"><%= post ? 'Update' : 'Create' %></button>
+    <a href="/admin/dashboard" class="btn">Cancel</a>
+  </form>
+</div>
