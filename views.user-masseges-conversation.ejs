@@ -1,0 +1,39 @@
+<% title = `Chat with ${otherUser.name}` %>
+<div class="Box p-4">
+  <div class="d-flex flex-items-center mb-4">
+    <a href="/messages" class="btn btn-sm mr-3">← Back</a>
+    <% if (otherUser.profile_pic_url) { %>
+      <img src="<%= otherUser.profile_pic_url %>" class="avatar mr-2" style="width: 32px; height: 32px;">
+    <% } else { %>
+      <span class="avatar mr-2"><%= otherUser.name[0] %></span>
+    <% } %>
+    <h3><%= otherUser.name %></h3>
+    <% if (otherUser.role === 'admin') { %>
+      <span class="badge-verified ml-2">Verified</span>
+    <% } %>
+  </div>
+
+  <div class="message-thread" style="max-height: 400px; overflow-y: auto; border: 1px solid #e1e4e8; padding: 16px; border-radius: 6px; background: #fff;">
+    <% messages.forEach(msg => { %>
+      <div class="d-flex mb-3 <%= msg.sender_id === user.id ? 'flex-justify-end' : '' %>">
+        <div style="max-width: 70%;">
+          <div class="Box p-2" style="<%= msg.sender_id === user.id ? 'background-color: #e1f5fe;' : '' %>">
+            <p class="mb-1"><%= decrypt(msg.content) %></p>
+            <small class="text-gray"><%= new Date(msg.created_at).toLocaleString() %></small>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
+  <form method="POST" action="/messages/send/<%= otherUser.id %>" class="mt-3 d-flex">
+    <input type="text" name="content" class="form-control flex-auto" placeholder="Type a message..." required>
+    <button type="submit" class="btn btn-primary ml-2">Send</button>
+  </form>
+</div>
+
+<script>
+  // Auto-scroll to bottom
+  const thread = document.querySelector('.message-thread');
+  if (thread) thread.scrollTop = thread.scrollHeight;
+</script>
