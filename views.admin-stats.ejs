@@ -1,0 +1,36 @@
+<% title = 'Statistics' %>
+<h1>Site Statistics</h1>
+<div class="Box p-4">
+  <div class="d-flex flex-wrap">
+    <div class="col-6 mb-3">
+      <div class="Box p-3 text-center">
+        <h2 class="h1"><%= totalUsers %></h2>
+        <p>Total Users</p>
+      </div>
+    </div>
+    <div class="col-6 mb-3">
+      <div class="Box p-3 text-center">
+        <h2 class="h1"><%= totalPosts %></h2>
+        <p>Total Posts</p>
+      </div>
+    </div>
+    <div class="col-6 mb-3">
+      <div class="Box p-3 text-center">
+        <h2 class="h1"><%= totalFiles %></h2>
+        <p>Total Files</p>
+      </div>
+    </div>
+    <div class="col-6 mb-3">
+      <div class="Box p-3 text-center">
+        <h2 class="h1"><%= totalMessages %></h2>
+        <p>Total Messages</p>
+      </div>
+    </div>
+  </div>
+  <h2 class="h3">Active Users</h2>
+  <ul>
+    <li>Today: <strong><%= activeToday %></strong></li>
+    <li>This Week: <strong><%= activeWeek %></strong></li>
+    <li>This Month: <strong><%= activeMonth %></strong></li>
+  </ul>
+</div>
